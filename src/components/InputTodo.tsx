@@ -1,4 +1,4 @@
-import React, { FunctionComponent, ChangeEvent } from "react"
+import React, { FunctionComponent } from "react"
 import "../App.css"
 import { Todo } from "../react-app-env"
 
