@@ -1,16 +1,16 @@
-import React, { FunctionComponent, ChangeEvent } from "react";
-import "../App.css";
-import { Todo } from "../react-app-env";
+import React, { FunctionComponent, ChangeEvent } from "react"
+import "../App.css"
+import { Todo } from "../react-app-env"
 
 interface Props {
-  currentTodo: string;
-  setCurrentTodo: (currentTodo: string) => void;
-  todos: Todo[];
-  setTodos: (todos: Todo[]) => void;
+  currentTodo: string
+  setCurrentTodo: (currentTodo: string) => void
+  todos: Todo[]
+  setTodos: (todos: Todo[]) => void
 }
 
 const InputTodo: FunctionComponent<Props> = props => {
-  const { currentTodo, todos, setCurrentTodo, setTodos } = props;
+  const { currentTodo, todos, setCurrentTodo, setTodos } = props
 
   const handleCreateTodo = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (currentTodo && e.key === "Enter") {
@@ -22,28 +22,28 @@ const InputTodo: FunctionComponent<Props> = props => {
           createdDate: new Date(Date.now()),
           id: Number(Date.now())
         }
-      ]);
+      ])
 
-      setCurrentTodo("");
+      setCurrentTodo("")
     }
-  };
+  }
 
   const handleAllTodos = () => {
-    const uncompleted = todos.filter(todo => todo.completed === false);
+    const uncompleted = todos.filter(todo => todo.completed === false)
     if (uncompleted.length > 0) {
       setTodos(
         todos.map(todo => {
-          return { ...todo, completed: true };
+          return { ...todo, completed: true }
         })
-      );
+      )
     } else {
       setTodos(
         todos.map(todo => {
-          return { ...todo, completed: false };
+          return { ...todo, completed: false }
         })
-      );
+      )
     }
-  };
+  }
 
   return (
     <>
@@ -63,7 +63,7 @@ const InputTodo: FunctionComponent<Props> = props => {
         />
       </div>
     </>
-  );
-};
+  )
+}
 
-export default InputTodo;
+export default InputTodo
