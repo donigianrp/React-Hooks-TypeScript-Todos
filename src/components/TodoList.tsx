@@ -45,11 +45,13 @@ const InputTodo: FunctionComponent<Props> = props => {
 
   return (
     <>
-      {displayed.map(todo => (
-        <TodoItem key={todo.id} todo={todo} setTodos={setTodos} todos={todos} />
-      ))}
+      <div>
+        {displayed.map(todo => (
+          <TodoItem key={todo.id} todo={todo} setTodos={setTodos} todos={todos} />
+        ))}
+      </div>
       <div className="todoFooter">
-        <div>{itemsLeft()}</div>
+        <div className="todo-count">{itemsLeft()}</div>
         <div className="filter">
           <div
             className={selected === "All" ? "active" : "option"}

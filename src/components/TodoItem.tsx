@@ -27,6 +27,14 @@ const TodoItem: FunctionComponent<Props> = props => {
     );
   };
 
+  const removeTodo = () => {
+    setTodos(
+      todos.filter((todoIteration: Todo) =>
+        todoIteration.id !== todo.id
+      )
+    )
+  }
+
   return (
     <>
       <div className="todoWrapper" key={Number(todo.createdDate)}>
@@ -43,6 +51,9 @@ const TodoItem: FunctionComponent<Props> = props => {
             className={todo.completed ? "detailCompleted" : "detailUncompleted"}
           >
             {formatDate(todo.createdDate)}
+            <div className="destroy" onClick={() => removeTodo()}>
+              ×
+            </div>
           </div>
         </div>
       </div>
