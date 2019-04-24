@@ -2,6 +2,7 @@ import React, { FunctionComponent, useState } from "react";
 import "../App.css";
 import { Todo } from "../react-app-env";
 import TodoItem from "./TodoItem";
+import TodoFooter from "./TodoFooter";
 
 interface Props {
   todos: Todo[];
@@ -11,18 +12,6 @@ interface Props {
 const InputTodo: FunctionComponent<Props> = props => {
   const { todos, setTodos } = props;
   const [selected, setSelected] = useState<string>("");
-
-  const itemsLeft = () => {
-    const uncompleted = todos.filter(todo => todo.completed === false);
-
-    return uncompleted.length === 1
-      ? `${uncompleted.length} item left`
-      : `${uncompleted.length} items left`;
-  };
-
-  const handleOption = (option: string) => {
-    setSelected(option);
-  };
 
   const handleDisplayed = () => {
     if (selected === "Active") {
@@ -34,34 +23,19 @@ const InputTodo: FunctionComponent<Props> = props => {
     }
   };
 
+  const todoProps = {
+    todos,
+    setTodos,
+    selected,
+    setSelected
+  };
+
   return (
     <>
       {handleDisplayed().map(todo => (
         <TodoItem key={todo.id} todo={todo} setTodos={setTodos} todos={todos} />
       ))}
-      <div className="todoFooter">
-        <div>{itemsLeft()}</div>
-        <div className="filter">
-          <div
-            className={selected === "All" ? "active" : "option"}
-            onClick={() => handleOption("All")}
-          >
-            All
-          </div>
-          <div
-            className={selected === "Active" ? "active" : "option"}
-            onClick={() => handleOption("Active")}
-          >
-            Active
-          </div>
-          <div
-            className={selected === "Completed" ? "active" : "option"}
-            onClick={() => handleOption("Completed")}
-          >
-            Completed
-          </div>
-        </div>
-      </div>
+      <TodoFooter {...todoProps} />
     </>
   );
 };

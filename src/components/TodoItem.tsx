@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from "react";
+import React, { FunctionComponent, useState } from "react";
 import "../App.css";
 import { Todo } from "../react-app-env";
 
@@ -10,6 +10,7 @@ interface Props {
 
 const TodoItem: FunctionComponent<Props> = props => {
   const { todo, todos, setTodos } = props;
+  const [hover, setHover] = useState<boolean>(false);
 
   const formatDate = (date: Date) => {
     return `${date.getMonth()}/${date.getDate()}/${date.getFullYear()}`;
@@ -17,11 +18,11 @@ const TodoItem: FunctionComponent<Props> = props => {
 
   const handleToggle = () => {
     setTodos(
-      todos.map((todoIteration: Todo) => {
-        if (todoIteration.id === todo.id) {
-          return { ...todoIteration, completed: !todoIteration.completed };
+      todos.map((todoIterated: Todo) => {
+        if (todoIterated.id === todo.id) {
+          return { ...todoIterated, completed: !todoIterated.completed };
         } else {
-          return todoIteration;
+          return todoIterated;
         }
       })
     );
@@ -29,7 +30,11 @@ const TodoItem: FunctionComponent<Props> = props => {
 
   return (
     <>
-      <div className="todoWrapper" key={Number(todo.createdDate)}>
+      <div
+        className="todoWrapper"
+        onMouseEnter={() => setHover(true)}
+        onMouseLeave={() => setHover(false)}
+      >
         <div className="toggle" onClick={() => handleToggle()}>
           {todo.completed ? <div className="checkmark">&#10003;</div> : null}
         </div>
@@ -39,10 +44,24 @@ const TodoItem: FunctionComponent<Props> = props => {
           >
             {todo.description}
           </div>
-          <div
-            className={todo.completed ? "detailCompleted" : "detailUncompleted"}
-          >
-            {formatDate(todo.createdDate)}
+          <div className="detailInnerWrapper">
+            <div
+              className={
+                todo.completed ? "detailCompleted" : "detailUncompleted"
+              }
+            >
+              {formatDate(todo.createdDate)}
+            </div>
+            <div
+              className="deleteTodo"
+              onClick={() =>
+                setTodos(
+                  todos.filter(todoIterated => todoIterated.id !== todo.id)
+                )
+              }
+            >
+              {hover ? "x" : ""}
+            </div>
           </div>
         </div>
       </div>
