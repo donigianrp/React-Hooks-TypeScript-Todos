@@ -1,37 +1,37 @@
-import React, { FunctionComponent, useState } from "react";
-import "../App.css";
-import { Todo } from "../react-app-env";
+import React, { FunctionComponent } from "react"
+import "../App.css"
+import { Todo } from "../react-app-env"
 
 interface Props {
-  todos: Todo[];
-  setTodos: (todos: Todo[]) => void;
-  selected: string;
-  setSelected: (selected: string) => void;
+  todos: Todo[]
+  setTodos: (todos: Todo[]) => void
+  selected: string
+  setSelected: (selected: string) => void
 }
 
 const TodoFooter: FunctionComponent<Props> = props => {
-  const { todos, setTodos, selected, setSelected } = props;
+  const { todos, setTodos, selected, setSelected } = props
 
   const itemsLeft = () => {
-    const uncompleted = todos.filter(todo => todo.completed === false);
+    const uncompleted = todos.filter(todo => todo.completed === false)
 
     return uncompleted.length === 1
       ? `${uncompleted.length} item left`
-      : `${uncompleted.length} items left`;
-  };
+      : `${uncompleted.length} items left`
+  }
 
   const handleOption = (option: string) => {
-    setSelected(option);
-  };
+    setSelected(option)
+  }
 
   const handleClearCompleted = () => {
-    setTodos(todos.filter(todo => todo.completed === false));
-  };
+    setTodos(todos.filter(todo => todo.completed === false))
+  }
 
   return (
     <>
       <div className="todoFooter">
-        <div>{itemsLeft()}</div>
+        <div className="todo-count">{itemsLeft()}</div>
         <div className="filter">
           <div
             className={selected === "All" ? "active" : "option"}
@@ -53,13 +53,13 @@ const TodoFooter: FunctionComponent<Props> = props => {
           </div>
         </div>
         {todos.filter(todo => todo.completed === true).length > 0 && (
-          <div className="option" onClick={() => handleClearCompleted()}>
+          <div className="todo-right" onClick={() => handleClearCompleted()}>
             Clear Completed
           </div>
         )}
       </div>
     </>
-  );
-};
+  )
+}
 
-export default TodoFooter;
+export default TodoFooter

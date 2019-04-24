@@ -1,26 +1,44 @@
-import React, { FunctionComponent, useState } from "react";
-import "./App.css";
-import InputTodo from "./components/InputTodo";
-import TodoList from "./components/TodoList";
-import { Todo } from "./react-app-env";
+import React, { Component } from "react"
+import "./App.css"
+import InputTodo from "./components/InputTodo"
+import TodoList from "./components/TodoList"
+import { Todo } from "./react-app-env"
 
-const App: FunctionComponent = () => {
-  const [todos, setTodos] = useState<Todo[]>([]);
-  const [currentTodo, setCurrentTodo] = useState("");
+interface AppState {
+  todos: Todo[]
+  currentTodo: string
+}
 
-  const todoProps = {
-    todos,
-    currentTodo,
-    setCurrentTodo,
-    setTodos
-  };
+class App extends Component<{}, AppState> {
+  state: AppState = {
+    todos: [],
+    currentTodo: ""
+  }
 
-  return (
-    <div className="app-root">
-      <InputTodo {...todoProps} />
-      <TodoList {...todoProps} />
-    </div>
-  );
-};
+  setTodos = (todos: Todo[]) => {
+    this.setState({ todos })
+  }
 
-export default App;
+  setCurrentTodo = (todo: string) => {
+    this.setState({ currentTodo: todo })
+  }
+
+  render() {
+    const { todos, currentTodo } = this.state
+    const { setCurrentTodo, setTodos } = this
+    const todoProps = {
+      todos,
+      currentTodo,
+      setCurrentTodo,
+      setTodos
+    }
+    return (
+      <div className="app-root">
+        <InputTodo {...todoProps} />
+        <TodoList {...todoProps} />
+      </div>
+    )
+  }
+}
+
+export default App
