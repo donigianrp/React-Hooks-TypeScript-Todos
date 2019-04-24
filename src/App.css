@@ -157,6 +157,9 @@ label {
   display: flex;
   justify-content: space-between;
 }
+.detailInnerWrapper {
+  display: flex;
+}
 .todoDetails {
   font-size: 20px;
   line-height: 30px;
@@ -165,6 +168,14 @@ label {
 .todo-count {
 	float: left;
 	text-align: left;
+}
+
+.todo-right {
+  position: relative;
+  float: right;
+  text-align: right;
+  cursor: pointer;
+  z-index: 10;
 }
 
 .detailUncompleted {
@@ -205,7 +216,9 @@ label {
 	height: 20px;
 	text-align: center;
   border-top: 1px solid #e6e6e6;
-  display: 'flex'
+  display: 'flex';
+  position: relative;
+
 }
 
 :focus {
@@ -263,6 +276,15 @@ label {
   border-radius: 2px;
   height: 26px;
   margin: 0px 7px;
+}
+
+.deleteTodo {
+  width: 30px;
+  font-size: 30px;
+  line-height: 23px;
+  color: tomato;
+  margin-left: 20px;
+  cursor: pointer;
 }
 
 @keyframes App-logo-spin {

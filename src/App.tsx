@@ -7,15 +7,12 @@ import { Todo } from "./react-app-env";
 const App: FunctionComponent = () => {
   const [todos, setTodos] = useState<Todo[]>([]);
   const [currentTodo, setCurrentTodo] = useState("");
-  const [displayed, setDisplayed] = useState<Todo[]>([]);
 
   const todoProps = {
     todos,
     currentTodo,
     setCurrentTodo,
-    setTodos,
-    displayed,
-    setDisplayed
+    setTodos
   };
 
   return (

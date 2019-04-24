@@ -1,78 +1,41 @@
-import React, { FunctionComponent, useState, useEffect } from "react";
+import React, { FunctionComponent, useState } from "react";
 import "../App.css";
 import { Todo } from "../react-app-env";
 import TodoItem from "./TodoItem";
+import TodoFooter from "./TodoFooter";
 
 interface Props {
   todos: Todo[];
-  displayed: Todo[];
   setTodos: (todos: Todo[]) => void;
-  setDisplayed: (todos: Todo[]) => void;
 }
 
 const InputTodo: FunctionComponent<Props> = props => {
-  const { todos, displayed, setDisplayed, setTodos } = props;
+  const { todos, setTodos } = props;
   const [selected, setSelected] = useState<string>("");
 
-  useEffect(() => {
+  const handleDisplayed = () => {
     if (selected === "Active") {
-      setDisplayed(todos.filter(todo => todo.completed === false));
+      return todos.filter(todo => todo.completed === false);
     } else if (selected === "Completed") {
-      setDisplayed(todos.filter(todo => todo.completed === true));
+      return todos.filter(todo => todo.completed === true);
     } else {
-      setDisplayed(todos);
+      return todos;
     }
-  }, [todos]);
-
-  const itemsLeft = () => {
-    const uncompleted = todos.filter(todo => todo.completed === false);
-
-    return uncompleted.length === 1
-      ? `${uncompleted.length} item left`
-      : `${uncompleted.length} items left`;
   };
-  const handleOption = (option: string) => {
-    // selected === option ? setSelected("") :
-    setSelected(option);
-    if (option === "Active") {
-      setDisplayed(todos.filter(todo => todo.completed === false));
-    } else if (option === "Completed") {
-      setDisplayed(todos.filter(todo => todo.completed === true));
-    } else {
-      setDisplayed(todos);
-    }
+
+  const todoProps = {
+    todos,
+    setTodos,
+    selected,
+    setSelected
   };
 
   return (
     <>
-      <div>
-        {displayed.map(todo => (
-          <TodoItem key={todo.id} todo={todo} setTodos={setTodos} todos={todos} />
-        ))}
-      </div>
-      <div className="todoFooter">
-        <div className="todo-count">{itemsLeft()}</div>
-        <div className="filter">
-          <div
-            className={selected === "All" ? "active" : "option"}
-            onClick={() => handleOption("All")}
-          >
-            All
-          </div>
-          <div
-            className={selected === "Active" ? "active" : "option"}
-            onClick={() => handleOption("Active")}
-          >
-            Active
-          </div>
-          <div
-            className={selected === "Completed" ? "active" : "option"}
-            onClick={() => handleOption("Completed")}
-          >
-            Completed
-          </div>
-        </div>
-      </div>
+      {handleDisplayed().map(todo => (
+        <TodoItem key={todo.id} todo={todo} setTodos={setTodos} todos={todos} />
+      ))}
+      <TodoFooter {...todoProps} />
     </>
   );
 };
